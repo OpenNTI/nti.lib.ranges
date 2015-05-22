@@ -1,8 +1,6 @@
 import * as Anchors from 'nti.lib.anchorjs';
 import * as DOM from 'nti.lib.dom';
 
-const isZeroRect = r => !r || ((r.top + r.left + r.height + r.width) === 0);
-
 const nonContextWorthySelectors = [
 	'object:not([type*=nti])'
 ];
@@ -210,7 +208,7 @@ function nodeThatIsEdgeOfRange (range, start) {
 		}
 
 		if (!container.previousSibling) {
-			//Ext.Error.raise('No possible node');
+			//throw new Error('No possible node');
 			return container;
 		}
 		return container.previousSibling;
@@ -431,45 +429,4 @@ export function fixUpCopiedContext (node) {
 	}
 
 	return node;
-}
-
-
-/**
- * Gets the bounding rect of the provided range.  If the rect is zero
- * but the range is not collapsed we will attempt to get the bounding box
- * based on the ranges contents.  We do this because IE sucks.
- * @param {Range} r range
- * @returns {Rect} Bounding Rect
- */
-export function safeBoundingBoxForRange (r) {
-	let rect = r ? r.getBoundingClientRect(r) : null, node;
-	try {
-		if (rect && !r.collapsed && isZeroRect(rect) && r.toString() === '' && !DOM.isTextNode(r.startContainer)) {
-			console.log('No rect information...attempting to get selected node rect instead');
-			node = r.startContainer.childNodes[r.startOffset];
-			rect = node.getBoundingClientRect();
-		}
-		else if (rect && !r.collapsed && isZeroRect(rect)) {
-			if (r.startContainer === r.endContainer && r.startContainer.nodeType !== Node.TEXT_NODE) {
-				if (r.startOffset + 1 === r.endOffset) {
-					console.debug('No rect information... the range contains just one node, use that instead.');
-					node = r.startContainer.childNodes[r.startOffset];
-				}
-				else if (r.startOffset === 0 && r.endOffset === r.endContainer.childNodes.length) {
-					console.debug('No rect information... the range contains all all contents of the object/doc, use the startContainer.');
-					node = r.startContainer;
-				}
-			}
-			rect = node.getBoundingClientRect();
-		}
-
-		//if it is still the zero rect and the common ancestor is an object, use the ancestors bounding rect
-		if (isZeroRect(rect) && r.commonAncestorContainer && r.commonAncestorContainer.tagName === 'OBJECT') {
-			rect = r.commonAncestorContainer.getBoundingClientRect();
-		}
-	}
-	catch (er) {
-		console.warn(er.stack || er.message || er);
-	}
-	return rect;
 }
