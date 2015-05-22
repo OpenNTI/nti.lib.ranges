@@ -13,6 +13,19 @@ const customContextGathers = {
 };
 
 
+export function isValidRange (r) {
+	let invalid = !r || (
+		r.collapsed &&
+		r.startContainer === document &&
+		r.endContainer === document &&
+		r.commonAncestorContainer === document &&
+		r.startOffset === 0 &&
+		r.endOffset === 0
+	);
+	return !invalid;
+}
+
+
 export function saveRange (r) {
 	if (!r) {
 		return null;
