@@ -11,7 +11,7 @@
     "url": "ssh://repos.nextthought.com/nti.lib.ranges"
   },
   "author": "",
-  "license": "private",
+  "private": true,
   "dependencies": {
     "nti.lib.dom": "git+https://repos.nextthought.com/git/nti.lib.domjs",
     "nti.lib.anchorjs": "git+https://repos.nextthought.com/git/nti.lib.anchorjs"
