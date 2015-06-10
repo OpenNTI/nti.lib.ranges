@@ -11,15 +11,17 @@ const customContextGathers = {
 };
 
 
-export function isValidRange (r) {
-	let invalid = !r || (
-		r.collapsed &&
-		r.startContainer === document &&
-		r.endContainer === document &&
-		r.commonAncestorContainer === document &&
-		r.startOffset === 0 &&
-		r.endOffset === 0
-	);
+export function isValidRange (r, containerNode = document) {
+	let commonNode = r && r.commonAncestorContainer;
+	let invalid = !r
+		|| !containerNode.contains(commonNode)
+		|| (
+			r.collapsed &&
+			r.startContainer === commonNode &&
+			r.endContainer === commonNode &&
+			r.startOffset === 0 &&
+			r.endOffset === 0
+		);
 	return !invalid;
 }
 
