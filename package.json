@@ -1,6 +1,6 @@
 {
   "name": "nti.lib.ranges",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Content Anchor handling library",
   "main": "index.js",
   "scripts": {
