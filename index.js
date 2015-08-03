@@ -223,14 +223,14 @@ function coverAll (rangeA) {
 	let range = rangeA ? rangeA.cloneRange() : null,
 		start, end, newStart, newEnd;
 
-	function test(c) {
+	function test (c) {
 		return DOM.isTextNode(c) ||
 				Anchors.isNodeIgnored(c) ||
 				/^(a|b|i|u|img|li)$/i.test(c.tagName); // ||
 				//c.childNodes.length === 1;
 	}
 
-	function walkOut(node, direction) {
+	function walkOut (node, direction) {
 		if (!node) {
 			return null;
 		}
