@@ -80,7 +80,7 @@ function nodeIfObjectOrInObject (node) {
 	if (!node) {
 		return null;
 	}
-	if (DOM.maches(node, selector)) {
+	if (DOM.matches(node, selector)) {
 		return node;
 	}
 	return DOM.parent(node, selector);
