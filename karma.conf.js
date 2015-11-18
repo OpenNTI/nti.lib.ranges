@@ -1,6 +1,5 @@
 /*eslint no-var: 0, strict: 0*/
 'use strict';
-var path = require('path');
 var webpack = require('webpack');
 
 
@@ -113,9 +112,25 @@ module.exports = function (config) {
 			],
 
 			module: {
+				preLoaders: [
+					{
+						test: /\.js$/,
+						loader: 'isparta-instrumenter',
+						exclude:[
+							/node_modules/,
+							/test/
+						]
+					}
+				],
 				loaders: [
-					{ test: /\.js(x)?$/, loader: 'babel', exclude: /node_modules(\/(?!nti\.)[^\/]+)*$/  },
-					{ test: /\.json$/, loader: 'json' }
+					{ test: /\.json$/, loader: 'json' },
+					{
+						test: /\.js$/,
+						loader: 'babel',
+						exclude:[
+							/node_modules(\/(?!nti\.)[^\/]+)*$/
+						]
+					}
 				]
 			}
 		}
