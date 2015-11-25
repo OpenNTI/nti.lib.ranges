@@ -3,6 +3,10 @@
   "version": "1.1.0",
   "description": "Content Anchor handling library",
   "main": "index.js",
+  "engines": {
+      "node": ">=5.0.0"
+      "npm": ">=3.3.0"
+  },
   "scripts": {
     "test": "grunt test"
   },
