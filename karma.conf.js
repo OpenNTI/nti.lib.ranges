@@ -128,7 +128,7 @@ module.exports = function (config) {
 						test: /\.js$/,
 						loader: 'babel',
 						exclude:[
-							/node_modules(\/(?!nti\.)[^\/]+)*$/
+							/node_modules/
 						]
 					}
 				]
