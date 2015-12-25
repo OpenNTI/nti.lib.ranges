@@ -1,4 +1,4 @@
-import * as RangeUtils from '../index';
+import * as RangeUtils from '../src/index';
 
 describe('RangeUtils tests', ()=> {
 
