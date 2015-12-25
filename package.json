@@ -1,13 +1,15 @@
 {
   "name": "nti.lib.ranges",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "",
   "description": "Content Anchor handling library",
   "main": "lib/index.js",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "engines": {
-      "node": ">=5.0.0",
-      "npm": ">=3.3.0"
+    "node": ">=5.0.0",
+    "npm": ">=3.3.0"
   },
   "scripts": {
     "test": "karma start --single-run --reporters dots,html,junit,coverage",
