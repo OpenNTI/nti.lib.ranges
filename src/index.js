@@ -1,5 +1,5 @@
-import * as Anchors from 'nti.lib.anchorjs';
-import * as DOM from 'nti.lib.dom';
+import * as Anchors from 'nti-lib-anchorjs';
+import * as DOM from 'nti-lib-dom';
 
 const isDebug = false;
 

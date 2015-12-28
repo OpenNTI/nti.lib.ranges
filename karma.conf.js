@@ -56,7 +56,7 @@ module.exports = function (config) {
 		junitReporter: {
 			outputDir: 'reports/test-results/',
 			outputFile: 'index.xml',
-			suite: 'nti.lib.ranges',
+			suite: 'nti-lib-ranges',
 			useBrowserName: false
 		},
 

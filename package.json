@@ -1,5 +1,5 @@
 {
-  "name": "nti.lib.ranges",
+  "name": "nti-lib-ranges",
   "version": "1.2.0",
   "author": "nextthought",
   "description": "Content Anchor handling library",
@@ -12,15 +12,17 @@
     "npm": ">=3.3.0"
   },
   "scripts": {
-    "test": "karma start --single-run --reporters dots,html,junit,coverage"
+    "test": "karma start --single-run --reporters dots,html,junit,coverage",
+    "start": "make check",
+    "prepublish": "karma start --single-run && make"
   },
   "repository": {
     "type": "git",
     "url": "ssh://repos.nextthought.com/nti.lib.ranges"
   },
   "dependencies": {
-    "nti.lib.dom": "^1.0.0",
-    "nti.lib.anchorjs": "^1.0.0"
+    "nti-lib-dom": "^1.0.0",
+    "nti-lib-anchorjs": "^1.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.1.0",
