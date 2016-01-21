@@ -1,7 +1,8 @@
 import * as Anchors from 'nti-lib-anchorjs';
 import * as DOM from 'nti-lib-dom';
+import Logger from 'nti-util-logger';
 
-const isDebug = false;
+const logger = Logger.get('lib:ranges');
 
 const nonContextWorthySelectors = [
 	'object:not([type*=nti])'
@@ -69,7 +70,7 @@ export function restoreSavedRange (o) {
 		r.setEnd(o.endContainer, o.endOffset);
 	}
 	catch (e) {
-		console.error(e.message);
+		logger.error(e.message);
 	}
 	return r;
 }
@@ -110,9 +111,9 @@ export function rangeIfItemPropSpan (range) {
 	//If we are an annotatable image make sure we get the enclosing span so that it is
 	//annotatable in the note window.
 	if (container) {
-		if (isDebug) {
-			console.log('we\'re inside a itemprop span.', container);
-		}
+
+		logger.debug('we\'re inside a itemprop span. %o', container);
+
 		r = document.createRange();
 		r.selectNode(container);
 		return r;
@@ -310,9 +311,7 @@ function expandRangeGetNode (range, doc) {
 		tempDiv.appendChild(expandRange(range));
 	}
 	catch (e) {
-		if (isDebug) {
-			console.error('Could not clone range contents', e.stack || e.message || e);
-		}
+		logger.debug('Could not clone range contents %o', e.stack || e.message || e);
 	}
 
 	return tempDiv;
