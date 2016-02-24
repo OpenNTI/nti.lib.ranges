@@ -22,6 +22,7 @@
     "url": "ssh://repos.nextthought.com/nti.lib.ranges"
   },
   "dependencies": {
+    "babel-runtime": "^6.5.0",
     "nti-lib-anchorjs": "^1.0.0",
     "nti-lib-dom": "^1.0.0",
     "nti-util-logger": "^1.0.0"
