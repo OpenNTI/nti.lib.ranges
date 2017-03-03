@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://repos.nextthought.com/git/nti.lib.ranges"
+    "url": "https://github.com/NextThought/nti.lib.ranges.git"
   },
   "dependencies": {
     "babel-runtime": "^6.5.0",
