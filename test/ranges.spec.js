@@ -1,3 +1,4 @@
+/* eslint-env jest */
 import * as RangeUtils from '../src/index';
 
 describe('RangeUtils tests', ()=> {
