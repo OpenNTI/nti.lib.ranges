@@ -229,10 +229,10 @@ function coverAll (rangeA) {
 		start, end, newStart, newEnd;
 
 	function test (c) {
-		return DOM.isTextNode(c) ||
-				Anchors.isNodeIgnored(c) ||
-				/^(a|b|i|u|img|li)$/i.test(c.tagName); // ||
-				//c.childNodes.length === 1;
+		return DOM.isTextNode(c)
+			|| Anchors.isNodeIgnored(c)
+			|| /^(a|b|i|u|img|li)$/i.test(c.tagName);
+			//	|| c.childNodes.length === 1;
 	}
 
 	function walkOut (node, direction) {
@@ -364,8 +364,8 @@ export function getBoundingClientRect (r) {
 
 export function getSelectedNodes (range, doc = range.commonAncestorContainer.ownerDocument) {
 	let getAt = side => DOM.isTextNode(range[`${side}Container`]) ?
-							range[`${side}Container`] :
-							range[`${side}Container`].childNodes[range[`${side}Offset`]];
+			range[`${side}Container`] :
+			range[`${side}Container`].childNodes[range[`${side}Offset`]];
 
 	let startAt = getAt('start'),
 		endAt = getAt('end'),
