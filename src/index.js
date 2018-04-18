@@ -1,6 +1,6 @@
-import * as Anchors from 'nti-lib-anchorjs';
-import * as DOM from 'nti-lib-dom';
-import Logger from 'nti-util-logger';
+import * as Anchors from '@nti/lib-anchors';
+import * as DOM from '@nti/lib-dom';
+import Logger from '@nti/util-logger';
 
 const logger = Logger.get('lib:ranges');
 

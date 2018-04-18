@@ -1,5 +1,5 @@
 {
-  "name": "nti-lib-ranges",
+  "name": "@nti/lib-ranges",
   "version": "1.5.0-alpha",
   "author": "nextthought",
   "license": "UNLICENSED",
@@ -19,17 +19,16 @@
     "url": "https://github.com/NextThought/nti.lib.ranges.git"
   },
   "dependencies": {
-    "babel-runtime": "^6.5.0",
-    "nti-lib-anchorjs": "^1.0.0",
-    "nti-lib-dom": "^1.0.0",
-    "nti-util-logger": "^1.0.0"
+    "@nti/lib-anchors": "^1.0.0",
+    "@nti/lib-dom": "^1.0.0",
+    "@nti/util-logger": "^1.0.0"
   },
   "devDependencies": {
     "@nti/codestyle-js": "^1.1.0",
+    "@nti/unittesting-clientside": "^2.0.0",
     "babel-cli": "^6.1.0",
     "babel-eslint": "^8.2.2",
     "babel-polyfill": "^6.1.0",
-    "babel-preset-env": "^1.1.4",
-    "nti-unittesting-clientside": "^2.0.0"
+    "babel-preset-env": "^1.1.4"
   }
 }
