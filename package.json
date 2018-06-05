@@ -18,6 +18,9 @@
     "type": "git",
     "url": "https://github.com/NextThought/nti.lib.ranges.git"
   },
+  "publishConfig": {
+    "registry": "https://npm.nextthought.com"
+  },
   "dependencies": {
     "@nti/lib-anchors": "^1.0.0",
     "@nti/lib-dom": "^1.0.0",
