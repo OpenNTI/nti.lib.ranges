@@ -147,7 +147,7 @@ function gatherVideoContext (node) {
 		}
 	}
 
-	return DOM.createDom({ cn: [
+	return DOM.createDOM({ cn: [
 		{html: title},
 		{
 			tag: 'img',
