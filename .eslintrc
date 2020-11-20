@@ -1,8 +1,3 @@
 {
-	"extends": "@nti/eslint-config-lib-scripts",
-	"rules": {
-		"import/no-commonjs": 0,
-		"import/no-extraneous-dependencies": 0,
-		"no-restricted-globals": 0
-	}
+	"extends": "@nti/eslint-config-lib-scripts"
 }
