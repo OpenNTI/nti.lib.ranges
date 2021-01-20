@@ -373,7 +373,7 @@ export function getSelectedNodes (range, doc = range.commonAncestorContainer.own
 
 	let walker = doc.createTreeWalker(
 		range.commonAncestorContainer,
-		NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, //eslint-disable-line no-bitwise
+		NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT,
 		//NOTE in every browser but IE the last two params are optional, but IE explodes if they aren't provided
 		null, false);
 
