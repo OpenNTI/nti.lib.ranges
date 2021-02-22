@@ -4,32 +4,27 @@ import Logger from '@nti/util-logger';
 
 const logger = Logger.get('lib:ranges');
 
-const nonContextWorthySelectors = [
-	'object:not([type*=nti])'
-];
+const nonContextWorthySelectors = ['object:not([type*=nti])'];
 
 const customContextGathers = {
 	'object[type$=naquestion]': gatherQuestionContext,
-	'object[type$=ntivideo]': gatherVideoContext
+	'object[type$=ntivideo]': gatherVideoContext,
 };
 
-
-export function isValidRange (r, containerNode = document) {
+export function isValidRange(r, containerNode = document) {
 	let commonNode = r && r.commonAncestorContainer;
-	let invalid = !r
-		|| !containerNode.contains(commonNode)
-		|| (
-			r.collapsed &&
+	let invalid =
+		!r ||
+		!containerNode.contains(commonNode) ||
+		(r.collapsed &&
 			r.startContainer === commonNode &&
 			r.endContainer === commonNode &&
 			r.startOffset === 0 &&
-			r.endOffset === 0
-		);
+			r.endOffset === 0);
 	return !invalid;
 }
 
-
-export function saveRange (r) {
+export function saveRange(r) {
 	if (!r) {
 		return null;
 	}
@@ -38,13 +33,17 @@ export function saveRange (r) {
 		startOffset: r.startOffset,
 		endContainer: r.endContainer,
 		endOffset: r.endOffset,
-		collapsed: r.collapsed
+		collapsed: r.collapsed,
 	};
 }
 
-
-export function saveInputSelection (s) {
-	if (!s || !s.focusNode || !s.focusNode.firstChild || s.focusNode.firstChild.tagName !== 'INPUT') {
+export function saveInputSelection(s) {
+	if (
+		!s ||
+		!s.focusNode ||
+		!s.focusNode.firstChild ||
+		s.focusNode.firstChild.tagName !== 'INPUT'
+	) {
 		return null;
 	}
 	let i = s.focusNode.firstChild;
@@ -52,12 +51,11 @@ export function saveInputSelection (s) {
 	return {
 		selectionStart: i.selectionStart,
 		selectionEnd: i.selectionEnd,
-		input: i
+		input: i,
 	};
 }
 
-
-export function restoreSavedRange (o) {
+export function restoreSavedRange(o) {
 	if (!o) {
 		return null;
 	}
@@ -68,15 +66,13 @@ export function restoreSavedRange (o) {
 		r = d.createRange();
 		r.setStart(o.startContainer, o.startOffset);
 		r.setEnd(o.endContainer, o.endOffset);
-	}
-	catch (e) {
+	} catch (e) {
 		logger.error(e.message);
 	}
 	return r;
 }
 
-
-function nodeIfObjectOrInObject (node) {
+function nodeIfObjectOrInObject(node) {
 	let selector = 'object';
 	if (!node) {
 		return null;
@@ -88,13 +84,15 @@ function nodeIfObjectOrInObject (node) {
 }
 
 //tested
-export function rangeIfItemPropSpan (range) {
+export function rangeIfItemPropSpan(range) {
 	/*
 	 * Special case for annototable images: We don't want to expand past the annototable img.
 	 * And since we usually expand by a given number of characters,
 	 * if you have multiple consecutive images, we were getting all of them; which is an unexpected behavior.
 	 */
-	let node = range.commonAncestorContainer, r, container,
+	let node = range.commonAncestorContainer,
+		r,
+		container,
 		markupSelector = '[itemprop~=nti-data-markupenabled]';
 
 	if (!node) {
@@ -103,16 +101,14 @@ export function rangeIfItemPropSpan (range) {
 
 	if (DOM.matches(node, markupSelector)) {
 		container = node;
-	}
-	else {
+	} else {
 		container = DOM.parent(node, markupSelector);
 	}
 
 	//If we are an annotatable image make sure we get the enclosing span so that it is
 	//annotatable in the note window.
 	if (container) {
-
-		logger.debug('we\'re inside a itemprop span. %o', container);
+		logger.debug("we're inside a itemprop span. %o", container);
 
 		r = document.createRange();
 		r.selectNode(container);
@@ -121,8 +117,7 @@ export function rangeIfItemPropSpan (range) {
 	return null;
 }
 
-
-function gatherQuestionContext (node) {
+function gatherQuestionContext(node) {
 	let contents = node.querySelector('.naquestion');
 	if (contents) {
 		return contents.cloneNode(true);
@@ -130,8 +125,7 @@ function gatherQuestionContext (node) {
 	return null;
 }
 
-
-function gatherVideoContext (node) {
+function gatherVideoContext(node) {
 	let title, src, titleNode, sourceNode;
 
 	titleNode = node.querySelector('param[name=title]');
@@ -147,20 +141,21 @@ function gatherVideoContext (node) {
 		}
 	}
 
-	return DOM.createDOM({ cn: [
-		{html: title},
-		{
-			tag: 'img',
-			cls: 'video-thumbnail',
-			src
-		}
-	]});
+	return DOM.createDOM({
+		cn: [
+			{ html: title },
+			{
+				tag: 'img',
+				cls: 'video-thumbnail',
+				src,
+			},
+		],
+	});
 }
-
 
 //How about a registry that maps the mimetype of the object
 //to a handler that knows how to give contents
-function contentsForObjectTag (object) {
+function contentsForObjectTag(object) {
 	let node;
 
 	for (let sel of Object.keys(customContextGathers)) {
@@ -175,8 +170,7 @@ function contentsForObjectTag (object) {
 	return node || object.cloneNode(true);
 }
 
-
-function nodeThatIsEdgeOfRange (range, start) {
+function nodeThatIsEdgeOfRange(range, start) {
 	if (!range) {
 		throw new Error('Node is not defined');
 	}
@@ -210,7 +204,11 @@ function nodeThatIsEdgeOfRange (range, start) {
 		if (container.previousSibling) {
 			return container.previousSibling;
 		}
-		while (!container.previousSibling && container.parentNode && offset !== 0) {
+		while (
+			!container.previousSibling &&
+			container.parentNode &&
+			offset !== 0
+		) {
 			container = container.parentNode;
 		}
 
@@ -223,17 +221,20 @@ function nodeThatIsEdgeOfRange (range, start) {
 	return container.childNodes.item(offset - 1);
 }
 
-
-function coverAll (rangeA) {
+function coverAll(rangeA) {
 	let range = rangeA ? rangeA.cloneRange() : null,
-		start, end, newStart, newEnd;
+		start,
+		end,
+		newStart,
+		newEnd;
 
-	const test = (c) => DOM.isTextNode(c)
-		|| Anchors.isNodeIgnored(c)
-		|| /^(a|b|i|u|img|li)$/i.test(c.tagName);
-		//	|| c.childNodes.length === 1;
+	const test = c =>
+		DOM.isTextNode(c) ||
+		Anchors.isNodeIgnored(c) ||
+		/^(a|b|i|u|img|li)$/i.test(c.tagName);
+	//	|| c.childNodes.length === 1;
 
-	function walkOut (node, direction) {
+	function walkOut(node, direction) {
 		if (!node) {
 			return null;
 		}
@@ -241,7 +242,8 @@ function coverAll (rangeA) {
 		let doc = node.ownerDocument,
 			walker = doc.createTreeWalker(doc, NodeFilter.SHOW_ALL, null, null),
 			nextName = direction === 'start' ? 'previousNode' : 'nextNode',
-			temp, result;
+			temp,
+			result;
 
 		walker.currentNode = node;
 		temp = walker.currentNode;
@@ -275,15 +277,23 @@ function coverAll (rangeA) {
 	return range;
 }
 
-
-export function expandRange (range, doc = range.commonAncestorContainer.ownerDocument) {
-	let object = nodeIfObjectOrInObject(range.commonAncestorContainer) || nodeIfObjectOrInObject(range.startContainer);
+export function expandRange(
+	range,
+	doc = range.commonAncestorContainer.ownerDocument
+) {
+	let object =
+		nodeIfObjectOrInObject(range.commonAncestorContainer) ||
+		nodeIfObjectOrInObject(range.startContainer);
 
 	if (!object) {
-		if (range.startContainer === range.endContainer &&
+		if (
+			range.startContainer === range.endContainer &&
 			range.startContainer.nodeType !== Node.TEXT_NODE &&
-			range.startOffset + 1 === range.endOffset) {
-			object = nodeIfObjectOrInObject(range.startContainer.childNodes[range.startOffset]);
+			range.startOffset + 1 === range.endOffset
+		) {
+			object = nodeIfObjectOrInObject(
+				range.startContainer.childNodes[range.startOffset]
+			);
 		}
 	}
 
@@ -301,22 +311,23 @@ export function expandRange (range, doc = range.commonAncestorContainer.ownerDoc
 	return clearNonContextualGarbage(r.cloneContents());
 }
 
-
-function expandRangeGetNode (range, doc) {
+function expandRangeGetNode(range, doc) {
 	let tempDiv = doc.createElement('div');
 
 	try {
 		tempDiv.appendChild(expandRange(range));
-	}
-	catch (e) {
-		logger.debug('Could not clone range contents %o', e.stack || e.message || e);
+	} catch (e) {
+		logger.debug(
+			'Could not clone range contents %o',
+			e.stack || e.message || e
+		);
 	}
 
 	return tempDiv;
 }
 
 //tested
-export function expandRangeGetString (range, doc) {
+export function expandRangeGetString(range, doc) {
 	let tempDiv, str;
 	tempDiv = expandRangeGetNode(range, doc, true);
 	str = tempDiv.innerHTML;
@@ -325,9 +336,8 @@ export function expandRangeGetString (range, doc) {
 	DOM.removeNode(tempDiv);
 
 	//return string clean of ids:
-	return str.replace(/\wid=".*?"/ig, '');
+	return str.replace(/\wid=".*?"/gi, '');
 }
-
 
 /**
  * Removes any nodes we don't want to show up in the context, for now that is assessment objects nodes, which have
@@ -336,22 +346,21 @@ export function expandRangeGetString (range, doc) {
  * @param {Element} dom - the dom you want cleaned, make sure it's a clone or you will delete stuff from the dom it belongs to.
  * @returns {Element} dom
  */
-function clearNonContextualGarbage (dom) {
-	for(let sel of nonContextWorthySelectors) {
-		for(let node of dom.querySelectorAll(sel)) {
+function clearNonContextualGarbage(dom) {
+	for (let sel of nonContextWorthySelectors) {
+		for (let node of dom.querySelectorAll(sel)) {
 			DOM.removeNode(node);
 		}
 	}
 	return dom;
 }
 
-
 /**
  * Takes a range or a rangy range and returns the bounding rect
  * @param {Range} r - either a browser range or a rangy range
  * @returns {ClientRect} Bounding Client Rect
  */
-export function getBoundingClientRect (r) {
+export function getBoundingClientRect(r) {
 	if (r.nativeRange) {
 		r = r.nativeRange;
 	}
@@ -359,15 +368,17 @@ export function getBoundingClientRect (r) {
 	return r.getBoundingClientRect();
 }
 
-
-export function getSelectedNodes (range, doc = range.commonAncestorContainer.ownerDocument) {
-	let getAt = side => DOM.isTextNode(range[`${side}Container`]) ?
-		range[`${side}Container`] :
-		range[`${side}Container`].childNodes[range[`${side}Offset`]];
+export function getSelectedNodes(
+	range,
+	doc = range.commonAncestorContainer.ownerDocument
+) {
+	let getAt = side =>
+		DOM.isTextNode(range[`${side}Container`])
+			? range[`${side}Container`]
+			: range[`${side}Container`].childNodes[range[`${side}Offset`]];
 
 	let startAt = getAt('start'),
 		endAt = getAt('end'),
-
 		nodes = [],
 		node;
 
@@ -375,24 +386,21 @@ export function getSelectedNodes (range, doc = range.commonAncestorContainer.own
 		range.commonAncestorContainer,
 		NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT,
 		//NOTE in every browser but IE the last two params are optional, but IE explodes if they aren't provided
-		null, false);
+		null,
+		false
+	);
 
 	//NOTE IE also blows up if you call nextNode() on a newly initialized treewalker whose root is a text node.
 	if (DOM.isTextNode(walker.currentNode)) {
 		node = walker.currentNode;
-	}
-	else {
+	} else {
 		node = walker.nextNode();
 	}
 
-
 	while (node) {
-
 		if (node === endAt) {
 			break;
-		}
-
-		else if (node === startAt || startAt === true) {
+		} else if (node === startAt || startAt === true) {
 			if (!DOM.isTextNode(node)) {
 				nodes.push(node);
 			}
@@ -406,16 +414,15 @@ export function getSelectedNodes (range, doc = range.commonAncestorContainer.own
 	return nodes;
 }
 
-
-
 /**
  * ?
  * @param {Node} node ?
  * @returns {Node} node
  */
-export function fixUpCopiedContext (node) {
-
-	for (let n of node.querySelectorAll('[itemprop~=nti-data-markupenabled] a')) {
+export function fixUpCopiedContext(node) {
+	for (let n of node.querySelectorAll(
+		'[itemprop~=nti-data-markupenabled] a'
+	)) {
 		DOM.addClass(n, 'skip-anchor');
 	}
 

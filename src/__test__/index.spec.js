@@ -1,28 +1,29 @@
 /* eslint-env jest */
 import * as RangeUtils from '../index';
 
-describe('RangeUtils tests', ()=> {
-
+describe('RangeUtils tests', () => {
 	let TestRangeUtils;
 
-	beforeEach(()=> {
+	beforeEach(() => {
 		TestRangeUtils = {};
 		Object.assign(TestRangeUtils, RangeUtils);
 	});
 
-	describe('rangeIfItemPropSpan', ()=> {
-
+	describe('rangeIfItemPropSpan', () => {
 		let testBody, itemProp, multiItemProp, img, img2, div, range;
 
 		//Setup fixture
-		beforeEach(()=> {
+		beforeEach(() => {
 			testBody = document.createElement('div');
 
 			itemProp = document.createElement('div');
 			itemProp.setAttribute('itemprop', 'nti-data-markupenabled');
 
 			multiItemProp = document.createElement('div');
-			multiItemProp.setAttribute('itemprop', 'nti-data-markupenabled hello');
+			multiItemProp.setAttribute(
+				'itemprop',
+				'nti-data-markupenabled hello'
+			);
 
 			img = document.createElement('span');
 			img2 = document.createElement('span');
@@ -40,12 +41,12 @@ describe('RangeUtils tests', ()=> {
 		});
 
 		//Tear down fixture
-		afterEach(()=> {
+		afterEach(() => {
 			document.body.removeChild(testBody);
 			testBody = itemProp = img = div = range = null;
 		});
 
-		test('Returns a range if itemprop provided', ()=> {
+		test('Returns a range if itemprop provided', () => {
 			let r;
 
 			range.selectNodeContents(itemProp);
@@ -53,7 +54,7 @@ describe('RangeUtils tests', ()=> {
 			expect(r).not.toBe(null);
 		});
 
-		test('Returns a range if itemprop descendant provided', ()=> {
+		test('Returns a range if itemprop descendant provided', () => {
 			let r;
 
 			range.selectNodeContents(img);
@@ -61,7 +62,7 @@ describe('RangeUtils tests', ()=> {
 			expect(r).not.toBe(null);
 		});
 
-		test('Returns a range if multiple itemprop provided', ()=> {
+		test('Returns a range if multiple itemprop provided', () => {
 			let r;
 
 			range.selectNodeContents(multiItemProp);
@@ -69,7 +70,7 @@ describe('RangeUtils tests', ()=> {
 			expect(r).not.toBe(null);
 		});
 
-		test('Returns a range if multi-itemprop descendant provided', ()=> {
+		test('Returns a range if multi-itemprop descendant provided', () => {
 			let r;
 
 			range.selectNodeContents(img2);
@@ -77,7 +78,7 @@ describe('RangeUtils tests', ()=> {
 			expect(r).not.toBe(null);
 		});
 
-		test('Doesnt return a range for anything else', ()=> {
+		test('Doesnt return a range for anything else', () => {
 			let r;
 
 			range.selectNodeContents(div);
@@ -86,20 +87,19 @@ describe('RangeUtils tests', ()=> {
 		});
 	});
 
-	describe('Expand Range Get String', ()=> {
-
+	describe('Expand Range Get String', () => {
 		let testBody;
 
-		beforeEach(()=> {
+		beforeEach(() => {
 			testBody = document.createElement('div');
 			document.body.appendChild(testBody);
 		});
 
-		afterEach(()=> {
+		afterEach(() => {
 			document.body.removeChild(testBody);
 		});
 
-		test('Fully Selected Text', ()=> {
+		test('Fully Selected Text', () => {
 			let nonTxtNode = document.createElement('div'),
 				txtNode = document.createTextNode('hello'),
 				range = document.createRange();
@@ -108,10 +108,12 @@ describe('RangeUtils tests', ()=> {
 			testBody.appendChild(nonTxtNode);
 			range.setStart(txtNode, 0);
 			range.setEnd(txtNode, 5);
-			expect(TestRangeUtils.expandRangeGetString(range, document)).toEqual('hello');
+			expect(
+				TestRangeUtils.expandRangeGetString(range, document)
+			).toEqual('hello');
 		});
 
-		test('Partly Selected Text Left Side', ()=> {
+		test('Partly Selected Text Left Side', () => {
 			let nonTxtNode = document.createElement('div'),
 				txtNode = document.createTextNode('hello'),
 				range = document.createRange();
@@ -120,10 +122,12 @@ describe('RangeUtils tests', ()=> {
 			testBody.appendChild(nonTxtNode);
 			range.setStart(txtNode, 1);
 			range.setEnd(txtNode, 5);
-			expect(TestRangeUtils.expandRangeGetString(range, document)).toEqual('hello');
+			expect(
+				TestRangeUtils.expandRangeGetString(range, document)
+			).toEqual('hello');
 		});
 
-		test('Partly Selected Text Right Side', ()=> {
+		test('Partly Selected Text Right Side', () => {
 			let nonTxtNode = document.createElement('div'),
 				txtNode = document.createTextNode('hello'),
 				range = document.createRange();
@@ -132,10 +136,12 @@ describe('RangeUtils tests', ()=> {
 			testBody.appendChild(nonTxtNode);
 			range.setStart(txtNode, 0);
 			range.setEnd(txtNode, 4);
-			expect(TestRangeUtils.expandRangeGetString(range, document)).toEqual('hello');
+			expect(
+				TestRangeUtils.expandRangeGetString(range, document)
+			).toEqual('hello');
 		});
 
-		test('Partly Selected Text Both Sides', ()=> {
+		test('Partly Selected Text Both Sides', () => {
 			let nonTxtNode = document.createElement('div'),
 				txtNode = document.createTextNode('hello'),
 				range = document.createRange();
@@ -144,10 +150,12 @@ describe('RangeUtils tests', ()=> {
 			testBody.appendChild(nonTxtNode);
 			range.setStart(txtNode, 1);
 			range.setEnd(txtNode, 4);
-			expect(TestRangeUtils.expandRangeGetString(range, document)).toEqual('hello');
+			expect(
+				TestRangeUtils.expandRangeGetString(range, document)
+			).toEqual('hello');
 		});
 
-		test('Partly Selected Multi Word', ()=> {
+		test('Partly Selected Multi Word', () => {
 			let nonTxtNode = document.createElement('div'),
 				txtNode = document.createTextNode('hello world'),
 				range = document.createRange();
@@ -156,10 +164,12 @@ describe('RangeUtils tests', ()=> {
 			testBody.appendChild(nonTxtNode);
 			range.setStart(txtNode, 1);
 			range.setEnd(txtNode, 4);
-			expect(TestRangeUtils.expandRangeGetString(range, document)).toEqual('hello world');
+			expect(
+				TestRangeUtils.expandRangeGetString(range, document)
+			).toEqual('hello world');
 		});
 
-		test('Partly Selected Punctuation', ()=> {
+		test('Partly Selected Punctuation', () => {
 			let nonTxtNode = document.createElement('div'),
 				txtNode = document.createTextNode('"hello, world"'),
 				range = document.createRange();
@@ -168,10 +178,12 @@ describe('RangeUtils tests', ()=> {
 			testBody.appendChild(nonTxtNode);
 			range.setStart(txtNode, 0);
 			range.setEnd(txtNode, 1);
-			expect(TestRangeUtils.expandRangeGetString(range, document)).toEqual('"hello, world"');
+			expect(
+				TestRangeUtils.expandRangeGetString(range, document)
+			).toEqual('"hello, world"');
 		});
 
-		test('Partly Selected Text Nested', ()=> {
+		test('Partly Selected Text Nested', () => {
 			let nonTxtNode1 = document.createElement('div'),
 				nonTxtNode2 = document.createElement('span'),
 				nonTxtNode3 = document.createElement('p'),
@@ -184,10 +196,12 @@ describe('RangeUtils tests', ()=> {
 			testBody.appendChild(nonTxtNode1);
 			range.setStart(txtNode, 1);
 			range.setEnd(txtNode, 4);
-			expect(TestRangeUtils.expandRangeGetString(range, document)).toEqual('hello');
+			expect(
+				TestRangeUtils.expandRangeGetString(range, document)
+			).toEqual('hello');
 		});
 
-		test('Partly Selected Text Two Text Nodes', ()=> {
+		test('Partly Selected Text Two Text Nodes', () => {
 			let nonTxtNode = document.createElement('div'),
 				txtNode1 = document.createTextNode('hello'),
 				txtNode2 = document.createTextNode(' world'),
@@ -198,10 +212,12 @@ describe('RangeUtils tests', ()=> {
 			testBody.appendChild(nonTxtNode);
 			range.setStart(txtNode1, 1);
 			range.setEnd(txtNode1, 4);
-			expect(TestRangeUtils.expandRangeGetString(range, document)).toEqual('hello world');
+			expect(
+				TestRangeUtils.expandRangeGetString(range, document)
+			).toEqual('hello world');
 		});
 
-		test('Partly Selected Text Two Text Nodes Single Node Selection', ()=> {
+		test('Partly Selected Text Two Text Nodes Single Node Selection', () => {
 			let nonTxtNode1 = document.createElement('div'),
 				nonTxtNode2 = document.createElement('span'),
 				nonTxtNode3 = document.createElement('p'),
@@ -216,10 +232,12 @@ describe('RangeUtils tests', ()=> {
 			testBody.appendChild(nonTxtNode1);
 			range.setStart(txtNode1, 1);
 			range.setEnd(txtNode1, 4);
-			expect(TestRangeUtils.expandRangeGetString(range, document)).toEqual('hello world');
+			expect(
+				TestRangeUtils.expandRangeGetString(range, document)
+			).toEqual('hello world');
 		});
 
-		test('Partly Selected Text Two Text Nodes Multi Node Selection', ()=> {
+		test('Partly Selected Text Two Text Nodes Multi Node Selection', () => {
 			let nonTxtNode1 = document.createElement('div'),
 				nonTxtNode2 = document.createElement('span'),
 				nonTxtNode3 = document.createElement('p'),
@@ -234,10 +252,12 @@ describe('RangeUtils tests', ()=> {
 			testBody.appendChild(nonTxtNode1);
 			range.setStart(txtNode1, 1);
 			range.setEnd(txtNode2, 1);
-			expect(TestRangeUtils.expandRangeGetString(range, document)).toEqual('hello world');
+			expect(
+				TestRangeUtils.expandRangeGetString(range, document)
+			).toEqual('hello world');
 		});
 
-		test('Partly Selected Text Two Text Nodes Diff levels Single Node Selection', ()=> {
+		test('Partly Selected Text Two Text Nodes Diff levels Single Node Selection', () => {
 			let nonTxtNode1 = document.createElement('div'),
 				nonTxtNode2 = document.createElement('span'),
 				nonTxtNode3 = document.createElement('p'),
@@ -252,10 +272,12 @@ describe('RangeUtils tests', ()=> {
 			testBody.appendChild(nonTxtNode1);
 			range.setStart(txtNode1, 1);
 			range.setEnd(txtNode1, 4);
-			expect(TestRangeUtils.expandRangeGetString(range, document)).toEqual('<p>hello</p> world');
+			expect(
+				TestRangeUtils.expandRangeGetString(range, document)
+			).toEqual('<p>hello</p> world');
 		});
 
-		test('Partly Selected Text Two Text Nodes Diff levels Single Node Selection', ()=> {
+		test('Partly Selected Text Two Text Nodes Diff levels Single Node Selection', () => {
 			let nonTxtNode1 = document.createElement('div'),
 				nonTxtNode2 = document.createElement('span'),
 				nonTxtNode3 = document.createElement('p'),
@@ -270,10 +292,12 @@ describe('RangeUtils tests', ()=> {
 			testBody.appendChild(nonTxtNode1);
 			range.setStart(txtNode1, 1);
 			range.setEnd(txtNode2, 1);
-			expect(TestRangeUtils.expandRangeGetString(range, document)).toEqual('<p>hello</p> world');
+			expect(
+				TestRangeUtils.expandRangeGetString(range, document)
+			).toEqual('<p>hello</p> world');
 		});
 
-		test('Object Node Question', ()=> {
+		test('Object Node Question', () => {
 			let nonTxtNode1 = document.createElement('object'),
 				nonTxtNode2 = document.createElement('div'),
 				txtNode = document.createTextNode('hello'),
@@ -281,17 +305,19 @@ describe('RangeUtils tests', ()=> {
 
 			nonTxtNode2.appendChild(txtNode);
 			nonTxtNode2.setAttribute('class', 'naquestion');
-			nonTxtNode1.setAttribute('type', '.naquestion');//type has to end in naquestion in order to trigger the "is Question" logic...
+			nonTxtNode1.setAttribute('type', '.naquestion'); //type has to end in naquestion in order to trigger the "is Question" logic...
 			nonTxtNode1.appendChild(nonTxtNode2);
 			testBody.appendChild(nonTxtNode1);
 
 			range.setStart(nonTxtNode1, 0);
 			range.setEnd(nonTxtNode1, 1);
 
-			expect(TestRangeUtils.expandRangeGetString(range, document)).toMatch(/^<div[^>]+class="naquestion"[^>]*>hello<\/div>$/);
+			expect(
+				TestRangeUtils.expandRangeGetString(range, document)
+			).toMatch(/^<div[^>]+class="naquestion"[^>]*>hello<\/div>$/);
 		});
 
-		test('Object Node Non Question', ()=> {
+		test('Object Node Non Question', () => {
 			let nonTxtNode1 = document.createElement('object'),
 				nonTxtNode2 = document.createElement('div'),
 				txtNode = document.createTextNode('hello'),
@@ -302,10 +328,12 @@ describe('RangeUtils tests', ()=> {
 			testBody.appendChild(nonTxtNode1);
 			range.setStart(nonTxtNode1, 0);
 			range.setEnd(nonTxtNode1, 1);
-			expect(TestRangeUtils.expandRangeGetString(range, document)).toMatch(/^<object[^>]*><div[^>]*>hello<\/div><\/object>$/);
+			expect(
+				TestRangeUtils.expandRangeGetString(range, document)
+			).toMatch(/^<object[^>]*><div[^>]*>hello<\/div><\/object>$/);
 		});
 
-		test('Markup Enabled with Object', ()=> {
+		test('Markup Enabled with Object', () => {
 			let nonTxtNode1 = document.createElement('div'),
 				nonTxtNode2 = document.createElement('span'),
 				nonTxtNode3 = document.createElement('object'),
@@ -319,10 +347,14 @@ describe('RangeUtils tests', ()=> {
 			testBody.appendChild(nonTxtNode1);
 			range.setStart(nonTxtNode1, 0);
 			range.setEnd(nonTxtNode1, 1);
-			expect(TestRangeUtils.expandRangeGetString(range, document)).toMatch(/^<div itemprop="nti-data-markupenabled">hello<span><[/]span><[/]div>$/);
+			expect(
+				TestRangeUtils.expandRangeGetString(range, document)
+			).toMatch(
+				/^<div itemprop="nti-data-markupenabled">hello<span><[/]span><[/]div>$/
+			);
 		});
 
-		test('Markup Enabled without Object', ()=> {
+		test('Markup Enabled without Object', () => {
 			let nonTxtNode1 = document.createElement('div'),
 				nonTxtNode2 = document.createElement('span'),
 				txtNode = document.createTextNode('hello'),
@@ -334,7 +366,11 @@ describe('RangeUtils tests', ()=> {
 			testBody.appendChild(nonTxtNode1);
 			range.setStart(nonTxtNode1, 0);
 			range.setEnd(nonTxtNode1, 1);
-			expect(TestRangeUtils.expandRangeGetString(range, document)).toMatch(/^<div itemprop="nti-data-markupenabled">hello<span><[/]span><[/]div>$/);
+			expect(
+				TestRangeUtils.expandRangeGetString(range, document)
+			).toMatch(
+				/^<div itemprop="nti-data-markupenabled">hello<span><[/]span><[/]div>$/
+			);
 		});
 	});
 });
