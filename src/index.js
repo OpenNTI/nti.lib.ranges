@@ -357,6 +357,7 @@ function clearNonContextualGarbage(dom) {
 
 /**
  * Takes a range or a rangy range and returns the bounding rect
+ *
  * @param {Range} r - either a browser range or a rangy range
  * @returns {ClientRect} Bounding Client Rect
  */
@@ -416,6 +417,7 @@ export function getSelectedNodes(
 
 /**
  * ?
+ *
  * @param {Node} node ?
  * @returns {Node} node
  */
